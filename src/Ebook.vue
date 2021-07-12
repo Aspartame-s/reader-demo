@@ -9,7 +9,7 @@
 			<div class="right" @click="nextPage"></div>
 		</div>
 	</div>
-	<menu-bar :titleMenu="titleMenu"></menu-bar>
+	<menu-bar :titleMenu="titleMenu" ref="menubar"></menu-bar>
 </div>
 </template>
 
@@ -53,6 +53,9 @@ export default {
 		},
 		toggleTitleMenu() {
 			this.titleMenu = !this.titleMenu
+			if(!this.titleMenu) {
+				this.$refs.menubar.hideSettingFont()
+			}
 			// if(this.titleMenu) {
 			// 	this.titleMenu = false
 			// } else {
