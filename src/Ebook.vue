@@ -9,7 +9,7 @@
 			<div class="right" @click="nextPage"></div>
 		</div>
 	</div>
-	<menu-bar :titleMenu="titleMenu" ref="menubar"></menu-bar>
+	<menu-bar :titleMenu="titleMenu" :fontList="fontList" ref="menubar"></menu-bar>
 </div>
 </template>
 
@@ -21,7 +21,16 @@ const DOWNLOAD_URL = '/static/2018_Book_AgileProcessesInSoftwareEngine.epub'
 export default {
 	data() {
 		return {
-			titleMenu: false
+			titleMenu: false,
+			fontList: [
+				{fontsize: 12},
+				{fontsize: 14},
+				{fontsize: 16},
+				{fontsize: 18},
+				{fontsize: 20},
+				{fontsize: 22},
+				{fontsize: 24},
+			]
 		};
 	},
 	components: {

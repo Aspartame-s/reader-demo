@@ -18,7 +18,17 @@
 		</transition>
 		<transition name="slide-up">
 		<div class="setting-wrapper" v-show="isSettingfont">
-
+			<div class="preview" :style="{fontSize: fontList[0].fontsize + 'px'}">A</div>
+			<div class="select">
+				<div class="select-wrapper" v-for="(item, index) in fontList" :key="index">
+					<div class="line"></div>
+					<div class="point-wrapper">
+						<div class="point"></div>
+					</div>
+					<div class="line"></div>
+				</div>
+			</div>
+			<div class="preview" :style="{fontSize: fontList[fontList.length -1].fontsize + 'px'}">A</div>
 		</div>
 		</transition>
 	</div>
@@ -35,7 +45,8 @@ export default {
 		titleMenu: {
 			type: Boolean,
 			default: false
-		}
+		},
+		fontList: Array
 	},
 	methods: {
 		settingFont() {
@@ -84,6 +95,30 @@ export default {
 			height: px2rem(60);
 			background-color: #fff;
 			box-shadow: 0 px2rem(-8) px2rem(8) rgba(0,0,0,0.15);
+			display: flex;
+			.preview {
+				flex: 0 0 px2rem(60);
+				@include center
+			}
+			.select {
+				display: flex;
+				flex: 1;
+				.select-wrapper {
+					flex: 1;
+					display: flex;
+					align-items: center;
+					.line {
+						flex: 1;
+						height: 0;
+						border-top: px2rem(1) solid #ccc;
+					}
+					.point-wrapper {
+						width: 0;
+						height: px2rem(8);
+						border-left: px2rem(1) solid #ccc;
+					}
+				}
+			}
 		}
 }
 
