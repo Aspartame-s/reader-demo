@@ -9,7 +9,16 @@
 			<div class="right" @click="nextPage"></div>
 		</div>
 	</div>
-	<menu-bar :titleMenu="titleMenu" :fontList="fontList" ref="menubar"></menu-bar>
+	<menu-bar :titleMenu="titleMenu"
+	 :fontList="fontList"
+	 :defaultFontSize="defaultFontSize"
+	 @setFontSize="setFontSize"
+	 :styleList="styleList"
+	 :defaultTheme="defaultTheme"
+	 @setTheme="setTheme"
+	 ref="menubar"
+	 >
+	 </menu-bar>
 </div>
 </template>
 
@@ -30,7 +39,47 @@ export default {
 				{fontsize: 20},
 				{fontsize: 22},
 				{fontsize: 24},
-			]
+			],
+			defaultFontSize: 16,
+			styleList: [
+				{
+					name: 'default',
+					style: {
+						body: {
+							'color': '#000',
+							'background': '#fff'
+						}
+					}
+				},
+				{
+					name: 'eye',
+					style: {
+						body: {
+							'color': '#000',
+							'background': '#ceeaba'
+						}
+					}
+				},
+				{
+					name: 'night',
+					style: {
+						body: {
+							'color': '#fff',
+							'background': '#000'
+						}
+					}
+				},
+				{
+					name: 'gold',
+					style: {
+						body: {
+							'color': '#000',
+							'background': 'rgb(241, 236, 226)'
+						}
+					}
+				},
+			],
+			defaultTheme: 0
 		};
 	},
 	components: {
@@ -49,6 +98,15 @@ export default {
 			})
 			//通过rendition.display方法渲染电子书
 			this.rendition.display()
+			//获取theme
+			this.themes = this.rendition.themes
+			this.setFontSize(this.defaultFontSize)
+			console.log(this.themes)
+			//电子书主题设置
+			//this.themes.register(name, style)通过themes的register方法注册主题
+			//this.themes.select(name)方法使用主题
+			this.registerTheme()
+			this.setTheme(this.defaultTheme)
 		},
 		prevPage() {
 			if(this.rendition) {
@@ -71,6 +129,24 @@ export default {
 			// 	this.titleMenu = true
 			// }
 			
+		},
+		setFontSize(fontSize) {
+			if(this.themes) {
+				this.defaultFontSize = fontSize
+				this.themes.fontSize(fontSize + 'px')
+			}
+		},
+		registerTheme() {
+			this.styleList.forEach(item => {
+				this.themes.register(item.name, item.style)
+			})
+		},
+		setTheme(index) {
+			this.defaultTheme = index
+			console.log(index)
+			this.themes.select(this.styleList[index].name)
+			delete this.themes._themes.eye.injected
+			console.log(this.themes._themes)
 		}
 	},
 	created() {},
